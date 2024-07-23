@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Serif } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/context/AuthProvider";
 
 const roboto = Roboto_Serif({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <AuthProvider>
       <body className={roboto.className}>{children}</body>
+      </AuthProvider>
     </html>
   );
 }
