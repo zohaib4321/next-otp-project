@@ -12,6 +12,8 @@ export async function GET(request: Request) {
 
   try {
     const {searchParams} = new URL(request.url)
+    console.log(searchParams);
+    
 
     const queryParams = {
       username: searchParams.get('username')

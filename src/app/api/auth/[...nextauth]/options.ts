@@ -16,13 +16,8 @@ export const authOptions: NextAuthOptions = {
 			async authorize(credentials: any): Promise<any> {
 				await dbConnect();
 				try {
-					const user = await UserModel.findOne({
-						$or: [
-							{ username: credentials.identifier },
-							{ email: credentials.identifier },
-						],
-					});
-
+					const user = await UserModel.findOne({email: credentials.email});
+					
 					if (!user) {
 						throw new Error("No user found with this email or username");
 					}
@@ -49,20 +44,20 @@ export const authOptions: NextAuthOptions = {
 	],
 	callbacks: {
 		async jwt({ token, user }) {
-      if (user) {
-        token._id = user._id?.toString()
-        token.username = user.username
-        token.isVerified = user.isVerified
-        token.isAcceptingMessage = user.isAcceptingMessage
-      }
+			if (user) {
+				token._id = user._id?.toString();
+				token.username = user.username;
+				token.isVerified = user.isVerified;
+				token.isAcceptingMessage = user.isAcceptingMessage;
+			}
 			return token;
 		},
 		async session({ session, token }) {
 			if (token) {
-				session.user._id = token._id
-				session.user.username = token.username
-				session.user.isVerified = token.isVerified
-				session.user.isAcceptingMessage = token.isAcceptingMessage
+				session.user._id = token._id;
+				session.user.username = token.username;
+				session.user.isVerified = token.isVerified;
+				session.user.isAcceptingMessage = token.isAcceptingMessage;
 			}
 			return session;
 		},
@@ -72,6 +67,6 @@ export const authOptions: NextAuthOptions = {
 	},
 	secret: process.env.NEXT_AUTH_SECRET,
 	pages: {
-		signIn: "/signin",
+		signIn: '/signin',
 	},
 };
