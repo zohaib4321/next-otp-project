@@ -1,13 +1,11 @@
 'use client'
 
-import React from 'react'
+import Navbar from "@/components/navbar"
 
-function page() {
+export default function Dashboard() {
   return (
     <div>
-      <h1>Dashboard page</h1>
+      <Navbar />
     </div>
   )
 }
-
-export default page
