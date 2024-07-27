@@ -11,9 +11,7 @@ export async function GET(request: Request) {
   await dbConnect()
 
   try {
-    const {searchParams} = new URL(request.url)
-    console.log(searchParams);
-    
+    const {searchParams} = new URL(request.url)    
 
     const queryParams = {
       username: searchParams.get('username')
@@ -61,7 +59,6 @@ export async function GET(request: Request) {
       }
     )
   } catch (error) {
-    console.error("Error checking username");
     return Response.json(
       {
         success: false,
@@ -73,4 +70,3 @@ export async function GET(request: Request) {
     )
   }
 }
-

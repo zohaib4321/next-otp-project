@@ -48,12 +48,10 @@ export async function POST(request: Request) {
       {
         success: true,
         message: "Update user message acceptance status successfully",
-        updatedUser
       },
       {status: 200}
     )
   } catch (error) {
-    console.error("Error updating message acceptance status");
     return Response.json(
       {
         success: false,
@@ -100,7 +98,7 @@ export async function GET(request: Request) {
     return Response.json(
       {
         success: true,
-        isAcceptingMessages: foundedUser.isAcceptingMessage 
+        isAcceptingMessage: foundedUser.isAcceptingMessage 
       },
       {status: 200}
     )

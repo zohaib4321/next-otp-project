@@ -29,7 +29,6 @@ export async function GET(request: Request) {
 			{ $sort: { "messages.createdAt": -1 } },
 			{ $group: { _id: "$_id", messages: { $push: "$messages" } } },
 		]);
-		console.log(user);
 
 		if (!user || user.length === 0) {
 			return Response.json(
@@ -49,8 +48,6 @@ export async function GET(request: Request) {
 			{ status: 200 }
 		);
 	} catch (error) {
-    console.error("An unexpected error occured");
-    
     return Response.json(
 			{
 				success: false,

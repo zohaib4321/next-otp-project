@@ -4,7 +4,8 @@ export const UsernameSchemaValidation = z
   .string()
   .min(3, "Username must be at least 3 characters")
   .max(20, "Username must not be greater than 20 characters")
-  .regex(/^[a-zA-Z0-9_]+$/, "Username must not contain special characters")
+  .refine((value) => !/[A-Z]/.test(value), 'Username must be lowercase')
+  .refine((value) => !/[^a-zA-Z0-9_]/.test(value), "Username must not contain special characters");
 
 export const signUpSchema = z.object({
   username: UsernameSchemaValidation,
@@ -21,3 +22,6 @@ export const verifyCodeSchema = z.object({
   code: z.string().min(6, "Verification code is 6 digits").max(6)
 })
 
+export const messageAcceptanceStatus = z.object({
+  acceptMessages: z.boolean()
+})
