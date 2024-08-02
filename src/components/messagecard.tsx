@@ -35,26 +35,26 @@ type MessageCardProps = {
 	onMessageDelete: (messageId: string) => void;
 };
 
-export default function MessageCard() {
-	// const { toast } = useToast();
+export default function MessageCard({message, onMessageDelete}: MessageCardProps) {
+	const { toast } = useToast();
 
-	// const handleDeleteConfirm = async () => {
-	// 	try {
-	// 		const response = await axios.delete<ApiResponse>(
-	// 			`/api/delete-message/${message._id}`
-	// 		);
-	// 		toast({
-	// 			title: response.data.message,
-	// 		});
-	// 		onMessageDelete(message._id);
-	// 	} catch (error) {
-	// 		const axiosError = error as AxiosError<ApiResponse>;
-	// 		toast({
-	// 			description:
-	// 				axiosError.response?.data.message ?? "Failed to delete message",
-	// 		});
-	// 	}
-	// };
+	const handleDeleteConfirm = async () => {
+		try {      
+			const response = await axios.delete<ApiResponse>(
+				`/api/delete-message/${message._id}`
+			);
+			toast({
+				title: response.data.message,
+			});
+			onMessageDelete(message._id);
+		} catch (error) {
+			const axiosError = error as AxiosError<ApiResponse>;
+			toast({
+				description:
+					axiosError.response?.data.message ?? "Failed to delete message",
+			});
+		}
+	};
 
 	return (
 		<Card>
@@ -62,7 +62,7 @@ export default function MessageCard() {
 			</CardHeader>
       <div>
 			<CardContent className="flex items-center justify-between">
-				<CardTitle>How are you?</CardTitle>
+				<CardTitle className="text-lg">{message.content}</CardTitle>
       <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant='destructive'>
@@ -78,14 +78,14 @@ export default function MessageCard() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
       </CardContent>
       <CardFooter className="text-sm font-medium">
         {
-          dayjs('2024-07-27T07:48:10.971+00:00').format('MMM DD, YYYY HH:mm A')
+          dayjs(message.createdAt).format('MMM DD, YYYY HH:mm A')
         }
       </CardFooter>
       </div>

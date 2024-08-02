@@ -3,7 +3,7 @@ import UserModel from "@/model/User";
 import { getServerSession, User } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/options";
 
-export async function POST(
+export async function DELETE(
 	request: Request,
 	{ params }: { params: { messageid: string } }
 ) {
@@ -22,7 +22,8 @@ export async function POST(
 		);
 	}
 
-	const userId = user?.id;
+	const userId = user?._id;
+	
 	try {
 		const updatedResult = await UserModel.updateOne(
 			{ _id: userId },
